@@ -6,28 +6,28 @@ const router = express.Router() //mini server -> acts like app
 
 
 // displaying all the products
-router.get('/products' , async(req,res)=>{
+router.get('/' , async(req,res)=>{
     let products = await Product.find({}); //finding the products
     res.render('products/index' , {products});
 })
 
 // Display the form to add a new quote
-router.get('/products/new', (req, res) => {
+router.get('/new', (req, res) => {
     res.render('products/new');
   });
 
-router.post('/products', async (req, res) => {
+router.post('/', async (req, res) => {
     const { author, quote } = req.body;
     try {
       await Product.create({ author, quote });
-      res.redirect('/products'); 
+      res.redirect('/'); 
     } catch (err) {
       console.error(err);
       res.redirect('/products/new'); 
     }
   });
 
-router.get('/products/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
       const productId = req.params.id;
       const product = await Product.findById(productId);
